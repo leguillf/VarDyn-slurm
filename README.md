@@ -1,6 +1,6 @@
-# MASSH-slurm
+# VarDyn-slurm
 
-Scripts and utilities to run [MASSH](https://github.com/leguillf/MASSH) SSH mapping experiments on HPC clusters using SLURM GPU arrays.
+Scripts and utilities to run [VarDyn/MASSH](https://github.com/leguillf/MASSH) SSH mapping experiments on HPC clusters using SLURM GPU arrays.
 
 ## Overview
 
