@@ -12,8 +12,9 @@ from astropy.convolution import Gaussian2DKernel, interpolate_replace_nans
 
 import xarray as xr
 
-# Add MASSH mapping path
-sys.path.append('/home/il/leguilf/MASSH/mapping')
+# Add MASSH mapping path — override with the MASSH_PATH environment variable
+_MASSH_PATH = os.environ.get('MASSH_PATH', '/home/il/leguilf/MASSH/mapping')
+sys.path.append(_MASSH_PATH)
 from src import exp, state
 from src.run_assimilation import (
     merge_output_date,

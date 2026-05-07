@@ -10,10 +10,13 @@ by VarDyn_GLO.sh and merge_outputs.py.
 """
 
 import argparse
+import os
 import sys
 from datetime import datetime
 
-sys.path.append('/home/il/leguilf/MASSH/mapping')
+# Add MASSH mapping path — override with the MASSH_PATH environment variable
+_MASSH_PATH = os.environ.get('MASSH_PATH', '/home/il/leguilf/MASSH/mapping')
+sys.path.append(_MASSH_PATH)
 from src import exp, state
 from src.run_assimilation import prepare_process
 

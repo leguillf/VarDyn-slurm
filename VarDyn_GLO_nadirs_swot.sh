@@ -130,6 +130,7 @@ PREPARE_ARGS="\
 # -------------------- ENVIRONMENT --------------------
 source /home/il/${USER}/.bashrc
 conda activate MASSHv2
+export MASSH_PATH="/home/il/leguilf/MASSH/mapping"  # Path to the MASSH mapping package
 
 # -------------------- LOG --------------------
 LOGDIR="./logs/${EXP_NAME}_job-${JOB_ID}"

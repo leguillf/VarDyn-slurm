@@ -125,7 +125,8 @@ sbatch VarDyn_GLO_nadirs_swot.sh --name_exp my_custom_name
 ## Requirements
 
 - SLURM with GPU support (`--gpus=v100_32g:1` or similar)
-- [MASSH](https://github.com/leguillf/MASSH) installed and importable from `sys.path`
+- [MASSH](https://github.com/leguillf/MASSH) installed and its `mapping/` directory accessible
+- `MASSH_PATH` environment variable set to the `mapping/` directory (or edit the default in `VarDyn_GLO_nadirs_swot.sh`)
 - Python environment with: `numpy`, `xarray`, `scipy`, `astropy`, `jax`, `cartopy`
 - Lustre/GPFS shared filesystem (barrier mechanism uses atomic `mkdir`)
 

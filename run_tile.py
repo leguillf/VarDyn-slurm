@@ -10,8 +10,9 @@ import pickle
 
 import warnings
 
-# MASSH imports
-sys.path.append('/home/il/leguilf/MASSH/mapping')
+# MASSH imports — override path with the MASSH_PATH environment variable
+_MASSH_PATH = os.environ.get('MASSH_PATH', '/home/il/leguilf/MASSH/mapping')
+sys.path.append(_MASSH_PATH)
 from src import inv
 
 
