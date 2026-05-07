@@ -60,6 +60,11 @@ TIME_OVERLAP=10
 # Misc
 FLAG_INIT_FROM_PREVIOUS="--flag_init_from_previous"
 
+# Barrier timeout (seconds): how long to wait for all GPUs at each time-window
+# barrier before proceeding. Must be longer than the slowest tile in any window.
+# For global runs with O(100) tiles per GPU, 2-4 h is a safe value.
+BARRIER_TIMEOUT=14400  # 4 hours
+
 # Init / background from a previous experiment (written into tile config pickles)
 FLAG_INIT=false        # initialize control vectors from NAME_EXP/Xres.nc
 FLAG_BACKGROUND=true  # use background field from NAME_EXP/Xres.nc
@@ -203,9 +208,6 @@ try_claim_tile() {
 }
 
 # -------------------- BARRIER: wait for all array tasks --------------------
-# Timeout (seconds) before giving up on a barrier — guards against a dead task
-# blocking the entire job.  Set generously (30 min) to allow slow tile processing.
-BARRIER_TIMEOUT=${BARRIER_TIMEOUT:-1800}
 barrier_wait() {
     local tag="$1"
     # Retry touch in case BARRIER_DIR has a stale handle or needs to be recreated

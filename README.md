@@ -63,6 +63,7 @@ Main SLURM submission script. Edit the **USER SETTINGS** block at the top for ea
 | `SPACE_WIN_X/Y`, `SPACE_OVERLAP_X/Y` | Spatial window size and overlap (degrees) |
 | `TIME_WIN`, `TIME_OVERLAP` | Temporal window size and overlap (days) |
 | `FLAG_INIT` / `FLAG_BACKGROUND` / `NAME_EXP` | Initialise from / use background from a previous experiment |
+| `BARRIER_TIMEOUT` | Seconds to wait at each inter-GPU barrier before proceeding (default: 14400 = 4 h) |
 
 **CLI flags** (passed after the script name):
 
