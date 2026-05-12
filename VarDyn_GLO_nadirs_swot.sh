@@ -75,6 +75,7 @@ NAME_EXP="VarDyn_GLO_nadirs"            # name of the previous experiment
 SKIP_PREPARE=false
 RESTART_ARGS=""
 FORCE_MERGE=false
+MERGE_ONLY=false
 NAME_EXP_OVERRIDE=""
 args=("$@")
 i=0
@@ -83,6 +84,7 @@ while [ $i -lt ${#args[@]} ]; do
         --skip-prepare)  SKIP_PREPARE=true ;;
         --restart)       RESTART_ARGS="--restart" ;;
         --force-merge)   FORCE_MERGE=true ;;
+        --merge-only)    MERGE_ONLY=true; SKIP_PREPARE=true ;;
         --name_exp)      i=$(( i + 1 )); NAME_EXP_OVERRIDE="${args[$i]}" ;;
         --name_exp=*)    NAME_EXP_OVERRIDE="${args[$i]#--name_exp=}" ;;
     esac
@@ -272,25 +274,29 @@ for TIME_DIR in $TIME_WINDOWS; do
     while [ ! -f "${BARRIER_DIR}/queue_ready_iw${IW}" ]; do sleep 1; done
 
     # Each task dynamically claims tiles (first to mkdir wins)
-    running=0
-    tiles_done=0
-    while IFS= read -r TILE; do
-        [ -z "$TILE" ] && continue
+    if ! $MERGE_ONLY; then
+        running=0
+        tiles_done=0
+        while IFS= read -r TILE; do
+            [ -z "$TILE" ] && continue
 
-        # Try to claim this tile; skip if another GPU already got it
-        try_claim_tile "$TILE" || continue
+            # Try to claim this tile; skip if another GPU already got it
+            try_claim_tile "$TILE" || continue
 
-        run_single_tile "$TILE" &
-        ((running++))
-        ((tiles_done++))
+            run_single_tile "$TILE" &
+            ((running++))
+            ((tiles_done++))
 
-        if (( running >= NUM_TILES_PER_GPU )); then
-            wait -n
-            ((running--))
-        fi
-    done < "$TILE_LIST"
-    wait
-    echo "$(date '+%F %T') | GPU ${ARRAY_ID} | Processed ${tiles_done} tiles in time window ${IW}"
+            if (( running >= NUM_TILES_PER_GPU )); then
+                wait -n
+                ((running--))
+            fi
+        done < "$TILE_LIST"
+        wait
+        echo "$(date '+%F %T') | GPU ${ARRAY_ID} | Processed ${tiles_done} tiles in time window ${IW}"
+    else
+        echo "$(date '+%F %T') | GPU ${ARRAY_ID} | Skipping assimilation (--merge-only)"
+    fi
 
     # Barrier: wait for all GPUs to finish this time window
     barrier_wait "tw${IW}"

@@ -72,6 +72,7 @@ Main SLURM submission script. Edit the **USER SETTINGS** block at the top for ea
 | `--skip-prepare` | Skip `prepare_VarDyn.py` if pickles already exist |
 | `--restart` | Pass `--restart` to `run_tile.py` (resume from checkpoint) |
 | `--force-merge` | Force re-merge even if output files already exist |
+| `--merge-only` | Skip preparation and assimilation, only run spatial and time-window merges |
 | `--name_exp <name>` | Override experiment name (default: read from config or filename) |
 
 **`EXP_NAME` resolution order:**
