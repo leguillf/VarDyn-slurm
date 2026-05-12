@@ -63,7 +63,7 @@ FLAG_INIT_FROM_PREVIOUS="--flag_init_from_previous"
 # Barrier timeout (seconds): how long to wait for all GPUs at each time-window
 # barrier before proceeding. Must be longer than the slowest tile in any window.
 # For global runs with O(100) tiles per GPU, 2-4 h is a safe value.
-BARRIER_TIMEOUT=14400  # 4 hours
+BARRIER_TIMEOUT=7200   # 2 hours
 
 # Init / background from a previous experiment (written into tile config pickles)
 FLAG_INIT=false        # initialize control vectors from NAME_EXP/Xres.nc
